@@ -1,12 +1,11 @@
 import java.util.Map;
-import java.util.Set;
 
 public class TennisGame1 implements TennisGame {
 
   private int scorePlayerOne = 0;
   private int scorePlayerTwo = 0;
-  private String playerOne;
-  private String playerTwo;
+  private final String playerOne;
+  private final String playerTwo;
 
   public TennisGame1(String playerOne, String playerTwo) {
     this.playerOne = playerOne;
@@ -57,7 +56,7 @@ public class TennisGame1 implements TennisGame {
       return "Advantage " + playerOne;
     }
     if (isPlayerTwoInAdvantage(scoreDifference)) {
-      return "Advantage " + playerTwo;//fix me string duplication
+      return "Advantage " + playerTwo;
     }
     if (hasPlayerOneWonTheGame(scoreDifference)) {
       return "Win for " + playerOne;
