@@ -1,3 +1,5 @@
+import java.util.Map;
+import java.util.Set;
 
 public class TennisGame1 implements TennisGame {
 
@@ -20,9 +22,9 @@ public class TennisGame1 implements TennisGame {
   }
 
   public String getScore() {
-    StringBuilder result;
+    StringBuilder result = new StringBuilder();
     if (isADraw(scorePlayerOne, scorePlayerTwo)) {
-      result = calculateDrawScore();
+      result.append(calculateDrawScore());
     } else if (hasAnyPlayerScoredForty()) {
       result = calculateScoreWhenSomePlayerReachedForty();
     } else {
@@ -77,24 +79,10 @@ public class TennisGame1 implements TennisGame {
     return isADraw(scoreDifference, 1);
   }
 
-  private StringBuilder calculateDrawScore() {
-    StringBuilder result;
-    switch (scorePlayerOne) {
-      case 0:
-        result = new StringBuilder("Love-All");
-        break;
-      case 1:
-        result = new StringBuilder("Fifteen-All");
-        break;
-      case 2:
-        result = new StringBuilder("Thirty-All");
-        break;
-      default:
-        result = new StringBuilder("Deuce");
-        break;
-
-    }
-    return result;
+  private String calculateDrawScore() {
+    Map<Integer, String> scoreDrawNames = Map
+        .of(0, "Love-All", 1, "Fifteen-All", 2, "Thirty-All", 3, "Deuce");
+    return scoreDrawNames.getOrDefault(scorePlayerOne, scoreDrawNames.get(3));
   }
 
   private boolean isADraw(int scorePlayerOne, int scorePlayerTwo) {
