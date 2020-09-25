@@ -12,17 +12,17 @@ public class TennisGame1 implements TennisGame {
   }
 
   public void wonPoint(String playerName) {
-      if (playerName.equals("player1")) {
-          scorePlayerOne += 1;
-      } else {
-          scorePlayerTwo += 1;
-      }
+    if (playerName.equals(playerOne)) {
+      scorePlayerOne += 1;
+    } else {
+      scorePlayerTwo += 1;
+    }
   }
 
   public String getScore() {
     String score = "";
     int tempScore = 0;
-    if (scorePlayerOne == scorePlayerTwo) {
+    if (isADraw(scorePlayerOne, scorePlayerTwo)) {
       switch (scorePlayerOne) {
         case 0:
           score = "Love-All";
@@ -38,25 +38,25 @@ public class TennisGame1 implements TennisGame {
           break;
 
       }
-    } else if (scorePlayerOne >= 4 || scorePlayerTwo >= 4) {
+    } else if (hasAnyPlayerScoredForty()) {
       int minusResult = scorePlayerOne - scorePlayerTwo;
-        if (minusResult == 1) {
-            score = "Advantage player1";
-        } else if (minusResult == -1) {
-            score = "Advantage player2";
-        } else if (minusResult >= 2) {
-            score = "Win for player1";
-        } else {
-            score = "Win for player2";
-        }
+      if (isADraw(minusResult, 1)) {
+        score = "Advantage " + playerOne;
+      } else if (isADraw(minusResult, -1)) {
+        score = "Advantage " + playerTwo;
+      } else if (minusResult >= 2) {
+        score = "Win for " + playerOne;
+      } else {
+        score = "Win for " + playerTwo;
+      }
     } else {
       for (int i = 1; i < 3; i++) {
-          if (i == 1) {
-              tempScore = scorePlayerOne;
-          } else {
-              score += "-";
-              tempScore = scorePlayerTwo;
-          }
+        if (isADraw(i, 1)) {
+          tempScore = scorePlayerOne;
+        } else {
+          score += "-";
+          tempScore = scorePlayerTwo;
+        }
         switch (tempScore) {
           case 0:
             score += "Love";
@@ -74,5 +74,13 @@ public class TennisGame1 implements TennisGame {
       }
     }
     return score;
+  }
+
+  private boolean isADraw(int scorePlayerOne, int scorePlayerTwo) {
+    return scorePlayerOne == scorePlayerTwo;
+  }
+
+  private boolean hasAnyPlayerScoredForty() {
+    return scorePlayerOne >= 4 || scorePlayerTwo >= 4;
   }
 }
