@@ -20,60 +20,60 @@ public class TennisGame1 implements TennisGame {
   }
 
   public String getScore() {
-    String score = "";
+    StringBuilder result = new StringBuilder();
     int tempScore = 0;
     if (isADraw(scorePlayerOne, scorePlayerTwo)) {
       switch (scorePlayerOne) {
         case 0:
-          score = "Love-All";
+          result = new StringBuilder("Love-All");
           break;
         case 1:
-          score = "Fifteen-All";
+          result = new StringBuilder("Fifteen-All");
           break;
         case 2:
-          score = "Thirty-All";
+          result = new StringBuilder("Thirty-All");
           break;
         default:
-          score = "Deuce";
+          result = new StringBuilder("Deuce");
           break;
 
       }
     } else if (hasAnyPlayerScoredForty()) {
       int minusResult = scorePlayerOne - scorePlayerTwo;
       if (isADraw(minusResult, 1)) {
-        score = "Advantage " + playerOne;
+        result = new StringBuilder("Advantage " + playerOne);
       } else if (isADraw(minusResult, -1)) {
-        score = "Advantage " + playerTwo;
+        result = new StringBuilder("Advantage " + playerTwo);//fix me string duplication
       } else if (minusResult >= 2) {
-        score = "Win for " + playerOne;
+        result = new StringBuilder("Win for " + playerOne);
       } else {
-        score = "Win for " + playerTwo;
+        result = new StringBuilder("Win for " + playerTwo);
       }
     } else {
       for (int i = 1; i < 3; i++) {
         if (isADraw(i, 1)) {
           tempScore = scorePlayerOne;
         } else {
-          score += "-";
+          result.append("-");
           tempScore = scorePlayerTwo;
         }
         switch (tempScore) {
           case 0:
-            score += "Love";
+            result.append("Love");
             break;
           case 1:
-            score += "Fifteen";
+            result.append("Fifteen");
             break;
           case 2:
-            score += "Thirty";
+            result.append("Thirty");
             break;
           case 3:
-            score += "Forty";
+            result.append("Forty");
             break;
         }
       }
     }
-    return score;
+    return result.toString();
   }
 
   private boolean isADraw(int scorePlayerOne, int scorePlayerTwo) {
