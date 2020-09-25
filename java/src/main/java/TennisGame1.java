@@ -22,18 +22,16 @@ public class TennisGame1 implements TennisGame {
   }
 
   public String getScore() {
-    StringBuilder result = new StringBuilder();
     if (isADraw(scorePlayerOne, scorePlayerTwo)) {
-      result.append(calculateDrawScore());
-    } else if (hasAnyPlayerScoredForty()) {
-      result = calculateScoreWhenSomePlayerReachedForty();
-    } else {
-      result = calculateScore();
+      return calculateDrawScore();
     }
-    return result.toString();
+    if (hasAnyPlayerScoredForty()) {
+      return calculateScoreWhenSomePlayerReachedForty();
+    }
+    return calculateScore();
   }
 
-  private StringBuilder calculateScore() {
+  private String calculateScore() {
     StringBuilder result = new StringBuilder();
     int tempScore;
     for (int i = 1; i < 3; i++) {
@@ -45,7 +43,7 @@ public class TennisGame1 implements TennisGame {
       }
       result.append(mapScoreNames(tempScore));
     }
-    return result;
+    return result.toString();
   }
 
   private String mapScoreNames(int score) {
@@ -53,18 +51,18 @@ public class TennisGame1 implements TennisGame {
     return scoreNames[score];
   }
 
-  private StringBuilder calculateScoreWhenSomePlayerReachedForty() {
+  private String calculateScoreWhenSomePlayerReachedForty() {
     int scoreDifference = scorePlayerOne - scorePlayerTwo;
     if (isPlayerOneInAdvantage(scoreDifference)) {
-      return new StringBuilder("Advantage " + playerOne);
+      return "Advantage " + playerOne;
     }
     if (isPlayerTwoInAdvantage(scoreDifference)) {
-      return new StringBuilder("Advantage " + playerTwo);//fix me string duplication
+      return "Advantage " + playerTwo;//fix me string duplication
     }
     if (hasPlayerOneWonTheGame(scoreDifference)) {
-      return new StringBuilder("Win for " + playerOne);
+      return "Win for " + playerOne;
     }
-    return new StringBuilder("Win for " + playerTwo);
+    return "Win for " + playerTwo;
   }
 
   private boolean hasPlayerOneWonTheGame(int scoreDifference) {
