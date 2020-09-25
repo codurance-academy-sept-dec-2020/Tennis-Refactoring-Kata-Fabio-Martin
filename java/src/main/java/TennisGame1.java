@@ -60,18 +60,29 @@ public class TennisGame1 implements TennisGame {
     }
 
     private StringBuilder calculateScoreWhenSomePlayerReachedForty() {
-        StringBuilder result;
-        int minusResult = scorePlayerOne - scorePlayerTwo;
-        if (isADraw(minusResult, 1)) {
-            result = new StringBuilder("Advantage " + playerOne);
-        } else if (isADraw(minusResult, -1)) {
-            result = new StringBuilder("Advantage " + playerTwo);//fix me string duplication
-        } else if (minusResult >= 2) {
-            result = new StringBuilder("Win for " + playerOne);
-        } else {
-            result = new StringBuilder("Win for " + playerTwo);
+        int scoreDifference = scorePlayerOne - scorePlayerTwo;
+        if (isPlayerOneInAdvantage(scoreDifference)) {
+            return new StringBuilder("Advantage " + playerOne);
         }
-        return result;
+        if (isPlayerTwoInAdvantage(scoreDifference)) {
+            return new StringBuilder("Advantage " + playerTwo);//fix me string duplication
+        }
+        if (hasPlayerOneWonTheGame(scoreDifference)) {
+            return new StringBuilder("Win for " + playerOne);
+        }
+        return new StringBuilder("Win for " + playerTwo);
+    }
+
+    private boolean hasPlayerOneWonTheGame(int scoreDifference) {
+        return scoreDifference >= 2;
+    }
+
+    private boolean isPlayerTwoInAdvantage(int scoreDifference) {
+        return isADraw(scoreDifference, -1);
+    }
+
+    private boolean isPlayerOneInAdvantage(int scoreDifference) {
+        return isADraw(scoreDifference, 1);
     }
 
     private StringBuilder calculateDrawScore() {
